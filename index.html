@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Réservation des chambres</title>
+    <link rel="icon" href="logo.ico">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <section>
+            <img src="plan des chambres.jpg">
+            <div id="CH1" class="1"></div>
+            <div id="CH2" class="2"></div>
+            <div id="CH3" class="3"></div>
+            <div id="CHA" class="A"></div>
+            <div id="CH4" class="4"></div>
+            <div id="CH5" class="5"></div>
+            <div id="CH6" class="6"></div>
+            <div id="CH7" class="7"></div>
+            <div id="CH8" class="8"></div>
+            <div id="CHB" class="B"></div>
+            <div id="CH9" class="9"></div>
+            <div id="CH10" class="10"></div>
+            <div id="CH11" class="11"></div>
+            <div id="CH12" class="12"></div>
+            <div id="CH13" class="13"></div>
+            <div id="CH14" class="14"></div>
+            <div id="CHC" class="C"></div>
+            <div id="CH15" class="15"></div>
+            <div id="CH16" class="16"></div>
+            <div id="CH17" class="17"></div>
+            <div id="CH18" class="18"></div>
+            <div id="CH19" class="19"></div>
+            <div id="CHD" class="D"></div>
+            <div id="CH20" class="20"></div>
+            <div id="CH21" class="21"></div>
+            <div id="CH22" class="22"></div>
+        </section>    
+
+        <form method="post" action="formulaire.php" id="form">
+            <h2>Réservez vos chambres</h2>
+            <div class="CH1 chambre"><input value="CH1"  type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 1</div>
+            <div class="CH2 chambre"><input value="CH2"  type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 2</div>
+            <div class="CHA chambre"><input value="CHA" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre A</div>
+            <div class="CH3 chambre"><input value="CH3" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 3</div>
+            <div class="CH4 chambre"><input value="CH4" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 4</div>
+            <div class="CH5 chambre"><input value="CH5" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 5</div>
+            <div class="CH6 chambre"><input value="CH6" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 6</div>
+            <div class="CH7 chambre"><input value="CH7" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 7</div>
+            <div class="CH8 chambre"><input value="CH8" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 8</div>
+            <div class="CHB chambre"><input value="CHB" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre B</div>
+            <div class="CH9 chambre"><input value="CH9" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 9</div>
+            <div class="CH10 chambre"><input value="CH10" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 10</div>
+            <div class="CH11 chambre"><input value="CH11" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 11</div>
+            <div class="CH12 chambre"><input value="CH12" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 12</div>
+            <div class="CH13 chambre"><input value="CH13" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 13</div>
+            <div class="CH14 chambre"><input value="CH14" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 14</div>
+            <div class="CHC chambre"><input value="CHC" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre C</div>
+            <div class="CH15 chambre"><input value="CH15" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 15</div>
+            <div class="CH16 chambre"><input value="CH16" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 16</div>
+            <div class="CH17 chambre"><input value="CH17" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 17</div>
+            <div class="CH18 chambre"><input value="CH18" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 18</div>
+            <div class="CH19 chambre"><input value="CH19" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 19</div>
+            <div class="CHD chambre"><input value="CHD" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre D</div>
+            <div class="CH20 chambre"><input value="CH20" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 20</div>
+            <div class="CH21 chambre"><input value="CH21" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 21</div>
+            <div class="CH22 chambre"><input value="CH22" type="checkbox" name="chambres[]">&nbsp;&nbsp;&nbsp;Chambre 22</div>
+            <article><h2><span id="nbrelits">0</span> lits sélectionnés</h2></article>
+            <article id="suite">Suite</article><br/>
+        </form>
+    </main>
+<script>
+    
+    let chambresLettres = ["A", "B", "C", "D"];
+    let chambres = [];
+
+    /* Attribution couleur verte ou rouge en fonction de la disponibilité de la chambre */
+    let fetchOptions = { method: 'GET'};
+
+    const url = "https://aiolah-vaiti.fr/Chambres/chambres.php";
+    fetch(url, fetchOptions)
+    .then( (response) => { return response.json() })
+    .then ( (dataJSON) => {
+        for(let i=0; i<=21; i++)
+        {
+            if(dataJSON[i].Libre == 1)
+            {
+                document.getElementById("CH" + (i+1)).classList.add("green");
+            }
+            else
+            {
+                document.getElementById("CH" + (i+1)).classList.add("red");
+                document.getElementById("CH" + (i+1)).style.cursor = "default";
+            }
+        }
+        let i = 22;
+        for(let j=0; j<chambresLettres.length; j++)
+        {
+            if(dataJSON[i].Libre == 1)
+            {
+                document.getElementById("CH" + chambresLettres[j]).classList.add("green");
+            }
+            else
+            {
+                document.getElementById("CH" + chambresLettres[j]).classList.add("red");
+                document.getElementById("CH" + chambresLettres[j]).style.cursor = "default";
+            }
+            i++;
+        }
+
+        for(let i=0; i<=25; i++)
+        {
+            chambres.push(dataJSON[i]);
+        }
+    })
+
+    /* Ajout de l'écouteur d'évènement click sur chacune des div */
+    for(let i=1; i<=22; i++)
+    {
+        document.getElementById("CH" + i).addEventListener("click", reservation);
+    }
+
+    for(let i=0; i<chambresLettres.length; i++)
+    {
+        document.getElementById("CH" + chambresLettres[i]).addEventListener("click", reservation);
+    }
+
+    /* Couleur qui change si la chambre est cliquée */
+    let lits = 0;
+    function reservation(e)
+    {
+        let chambre = document.getElementById(e.target.id);
+
+        // Si la chambre est bleue alors on enlève le nombre de lits correspondants
+        if(chambre.classList.contains("blue"))
+        {
+            chambre.classList.add("green");
+            chambre.classList.remove("blue");
+            // On affiche la div checkbox
+            document.getElementsByClassName(e.target.id)[0].classList.toggle("active");
+            // On décoche la case checkbox
+            document.getElementsByClassName(e.target.id)[0].firstChild.checked = false;
+            for(let i=0; i<=25; i++)
+            {
+                if(chambres[i].NOM_CHAMBRE == e.target.id)
+                {
+                    lits -= Number(chambres[i].LITS);
+                    document.getElementById("nbrelits").innerHTML = lits;
+                }
+            }
+        }
+        // Si la chambre est verte alors on ajoute le nombre de lits correspondants
+        else if(chambre.classList.contains("green"))
+        {
+            // On ajoute la classe blue
+            chambre.classList.add("blue");
+            chambre.classList.remove("green");
+            // On affiche la div checkbox
+            document.getElementsByClassName(e.target.id)[0].classList.toggle("active");
+            // On coche la case checkbox
+            document.getElementsByClassName(e.target.id)[0].firstChild.checked = true;
+            // On ajoute le nombre de lits correspondants à la chambre
+            for(let i=0; i<=25; i++)
+            {
+                if(chambres[i].NOM_CHAMBRE == e.target.id)
+                {
+                    lits += Number(chambres[i].LITS);
+                    document.getElementById("nbrelits").innerHTML = lits;
+                }
+            }
+        }
+
+        /*console.log(chambres.find(memeChambre).LITS);
+        function memeChambre(chambre)
+        {
+            if(chambre.NOM_CHAMBRE == e.target.id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }*/
+    }
+
+    /* Ecouteur d'évènement sur les checkbox pour faire disparaître les champs quand on clique dessus */
+    for(let i = 0; i<26; i++)
+    {
+        document.getElementsByClassName("chambre")[i].firstChild.addEventListener("click", supprimerChambres);
+    }
+
+    function supprimerChambres(e)
+    {
+        document.getElementsByClassName(e.target.value)[0].classList.remove("active");
+        document.getElementsByClassName(e.target.value)[0].firstChild.checked = false;
+        document.getElementById(e.target.value).classList.remove("blue");
+        document.getElementById(e.target.value).classList.add("green");
+        for(let i=0; i<=25; i++)
+        {
+            if(chambres[i].NOM_CHAMBRE == e.target.value)
+            {
+                console.log(chambres[i].NOM_CHAMBRE);
+                lits -= Number(chambres[i].LITS);
+                document.getElementById("nbrelits").innerHTML = lits;
+                console.log(lits);
+            }
+        }
+    }
+
+    /* Affiche la suite du formulaire */
+    document.getElementById("suite").addEventListener("click", afficherFormulaire);
+
+    function afficherFormulaire()
+    {
+        document.getElementById("form").innerHTML += "<label>Votre nom</label>&nbsp;&nbsp;&nbsp;<input type='text' name='nom' required><br/><br/><label>Date de début du séjour</label>&nbsp;&nbsp;&nbsp;<input type='date' name='datedébut' required><br/><br/><label>Date de fin du séjour</label>&nbsp;&nbsp;&nbsp;<input type='date' name='datefin' required><input type='submit' value='Réserver'>";
+        for(let i=0; i<25; i++)
+        {
+            if(document.getElementsByClassName("chambre")[i].classList.contains("active"))
+            {
+                document.getElementsByClassName("chambre")[i].firstChild.checked = true;
+            }
+        }
+    }
+    
+
+</script>
+</body>
+</html>
